@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+
+# 运行时产物
+data/uploads/*
+data/audio/*
+!data/audio/.keep
+*.log
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 交付物（大文件不入库，用 Release 或网盘分发）
+dist/
+docs/out/*.mp4
+docs/out/*.pdf

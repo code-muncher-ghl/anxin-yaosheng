@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>安心药声 · 拍一下说明书，听见安全用药</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">药</div>
+    <div>
+      <h1>安心药声</h1>
+      <p>拍一下说明书，听见安全用药</p>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button id="fontToggle" class="ghost-btn" title="切换大字号">A+ 大字</button>
+    <span id="statusDot" class="dot" title="模型状态"></span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="scan">① 拍照解读</button>
+  <button class="tab" data-tab="ask">② 用药问答</button>
+  <button class="tab" data-tab="mix">③ 多药检查</button>
+  <button class="tab" data-tab="family">④ 家属同步</button>
+</nav>
+
+<main>
+  <!-- ============ 1. 拍照解读 ============ -->
+  <section class="panel active" id="panel-scan">
+    <div class="grid-2">
+      <div class="card">
+        <h2>1. 上传说明书</h2>
+        <p class="hint">拍清晰一点，把「用法用量」「禁忌」拍进去</p>
+        <label class="uploader" id="uploader">
+          <input type="file" id="fileInput" accept="image/*" capture="environment" hidden />
+          <div class="up-icon">📷</div>
+          <div class="up-title">点击拍照 / 选择照片</div>
+          <div class="up-sub">支持 JPG / PNG，也可以直接粘贴文字</div>
+        </label>
+        <div class="row gap">
+          <button class="btn primary" id="btnTextMode">改为粘贴文字</button>
+        </div>
+        <textarea id="textInput" class="hidden" rows="6" placeholder="把说明书文字粘贴到这里……"></textarea>
+        <button class="btn primary hidden" id="btnParseText">解析文字</button>
+
+        <div class="divider"><span>或者，试试示例</span></div>
+        <div class="chips" id="sampleChips"></div>
+      </div>
+
+      <div class="card" id="labelCard">
+        <div class="empty" id="labelEmpty">
+          <div class="empty-icon">📄</div>
+          <p>还没有说明书</p>
+          <p class="hint">上传照片，或点左边的示例试试</p>
+        </div>
+        <div id="labelBody" class="hidden">
+          <div class="drug-head">
+            <div>
+              <h2 id="drugName">—</h2>
+              <p class="hint" id="drugSpec"></p>
+            </div>
+            <div class="conf" id="drugConf"></div>
+          </div>
+          <div id="labelSections"></div>
+          <div class="row gap">
+            <button class="btn primary big" id="btnExplain">🔊 听说明书</button>
+            <button class="btn" id="btnAddToList">＋ 加入用药清单</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="playerCard">
+      <div class="player-head">
+        <h2>语音播报</h2>
+        <span class="badge" id="playerMeta"></span>
+      </div>
+      <div class="player">
+        <button class="play-btn" id="playBtn">▶</button>
+        <div class="progress-wrap">
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="time" id="timeLabel">00:00 / 00:00</div>
+        </div>
+        <select id="rateSel" class="select">
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.25">1.25×</option>
+        </select>
+      </div>
+      <audio id="audio" preload="metadata"></audio>
+      <div id="transcript" class="transcript"></div>
+      <p class="disclaimer" id="scanDisclaimer"></p>
+    </div>
+  </section>
+
+  <!-- ============ 2. 用药问答 ============ -->
+  <section class="panel" id="panel-ask">
+    <div class="grid-2">
+      <div class="card">
+        <h2>用药问答</h2>
+        <p class="hint">只回答说明书里有的内容，答不上来就说不知道</p>
+        <div class="chips" id="qChips"></div>
+        <div class="chat" id="chat"></div>
+        <div class="ask-row">
+          <input id="askInput" placeholder="例如：这个药饭前吃还是饭后吃？" />
+          <button class="btn primary" id="btnAsk">提问</button>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="agentMode" />
+          <span>Agent 模式（自动调工具：检索 / 相互作用 / 转人工）</span>
+        </label>
+      </div>
+      <div class="card">
+        <h2>Agent 过程</h2>
+        <p class="hint">每一步工具调用都可审计</p>
+        <div id="traceBox" class="trace"><div class="empty small">提问后这里会显示模型的思考与工具调用</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. 多药检查 ============ -->
+  <section class="panel" id="panel-mix">
+    <div class="card">
+      <h2>多药同服检查</h2>
+      <p class="hint">把老人每天吃的药都加进来，检查是否会「打架」</p>
+      <div class="basket" id="basket"></div>
+      <div class="chips" id="basketSamples"></div>
+      <button class="btn primary big" id="btnMix">开始检查</button>
+    </div>
+    <div class="card hidden" id="mixResult">
+      <div class="row between">
+        <h2>检查结果</h2>
+        <span class="level-pill" id="mixLevel"></span>
+      </div>
+      <div id="mixFindings"></div>
+      <div class="note-box" id="mixSchedule"></div>
+      <p class="disclaimer" id="mixDisclaimer"></p>
+    </div>
+  </section>
+
+  <!-- ============ 4. 家属同步 ============ -->
+  <section class="panel" id="panel-family">
+    <div class="card">
+      <h2>给子女的用药交接单</h2>
+      <p class="hint">老人说不清楚的时候，让子女一眼看懂</p>
+      <div class="row gap">
+        <button class="btn primary big" id="btnFamily">生成交接单</button>
+        <button class="btn" id="btnCopyFamily">复制文字</button>
+      </div>
+      <div id="familyBody" class="family-body"></div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1600px; height: 980px; font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #fbfdfc; color: #10241f; padding: 52px 60px; position: relative; overflow: hidden;
+  }
+  body::after {
+    content: ""; position: absolute; width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,160,133,.10), transparent 65%);
+    right: -180px; top: -260px;
+  }
+  h1 { font-size: 40px; letter-spacing: 1px; }
+  .sub { color: #6b8079; font-size: 18px; margin-top: 8px; }
+  .tag { display: inline-block; background: #10241f; color: #fff; font-size: 14px; padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; letter-spacing: 2px; }
+  .flow { margin-top: 46px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; align-items: start; }
+  .node {
+    background: #fff; border: 1.5px solid #dbe9e4; border-radius: 16px; padding: 16px 14px;
+    margin: 0 20px; box-shadow: 0 8px 20px rgba(16,36,31,.05); position: relative; min-height: 98px;
+  }
+  .node .n { font-size: 12px; color: #9db5ae; font-weight: 700; letter-spacing: 1px; }
+  .node .t { font-size: 17px; font-weight: 700; margin-top: 4px; }
+  .node .d { font-size: 13px; color: #5b716b; margin-top: 6px; line-height: 1.45; }
+  .node.ai { border-color: #0f7a68; background: #f2fbf8; }
+  .node.risk { border-color: #e7b06a; background: #fffaf2; }
+  .node.end { border-color: #10241f; background: #10241f; color: #fff; }
+  .node.end .d { color: #b9ccc6; }
+  .node.end .n { color: #7f9c94; }
+  .row2 { margin-top: 56px; }
+  .arrow-h {
+    position: absolute; right: -26px; top: 44%; color: #9db5ae; font-size: 20px;
+  }
+  .loop {
+    margin-top: 40px; background: #fff; border: 1.5px dashed #b9d8ce; border-radius: 18px; padding: 20px 26px;
+    display: flex; gap: 26px; align-items: center;
+  }
+  .loop .lbl { font-weight: 700; color: #0f7a68; font-size: 15px; white-space: nowrap; }
+  .loop .steps { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; font-size: 14px; color: #40564f; }
+  .pill { background: #e6f6f1; color: #0f7a68; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 13px; }
+  .pill.w { background: #fdf1e2; color: #b26a12; }
+  .gate { display: flex; gap: 18px; margin-top: 34px; }
+  .gate .g { flex: 1; background: #fff; border-left: 4px solid #0f7a68; border-radius: 0 14px 14px 0; padding: 14px 18px; box-shadow: 0 8px 18px rgba(16,36,31,.05); }
+  .gate .g.warn { border-left-color: #d98428; }
+  .gate .g.risk { border-left-color: #c8392f; }
+  .gate .g h4 { font-size: 15px; margin-bottom: 4px; }
+  .gate .g p { font-size: 13px; color: #5b716b; line-height: 1.5; }
+  .foot { position: absolute; bottom: 30px; left: 60px; color: #8fa39d; font-size: 13px; }
+</style>
+</head>
+<body>
+  <span class="tag">业务流程</span>
+  <h1>一次「拍照 → 听懂 → 问明白」的完整链路</h1>
+  <p class="sub">绿色为 AI 环节，橙色为安全干预点，深色为用户价值交付</p>
+
+  <div class="flow">
+    <div class="node"><div class="n">STEP 1</div><div class="t">老人拍说明书</div><div class="d">子女也可代传<br>相册/拍照/粘贴文字</div><div class="arrow-h">→</div></div>
+    <div class="node ai"><div class="n">STEP 2 · VLM</div><div class="t">结构化解析</div><div class="d">11 字段 + 原文证据<br>不确定就返回 null</div><div class="arrow-h">→</div></div>
+    <div class="node risk"><div class="n">STEP 3 · 门禁</div><div class="t">置信度判断</div><div class="d">低于 0.75 提示重拍<br>或转药师人工</div><div class="arrow-h">→</div></div>
+    <div class="node ai"><div class="n">STEP 4 · LLM</div><div class="t">生成播报稿</div><div class="d">四段式、每句≤20字<br>数字白名单校验</div><div class="arrow-h">→</div></div>
+    <div class="node"><div class="n">STEP 5 · TTS</div><div class="t">慢速语音</div><div class="d">数字转中文读法<br>语速 -12%</div><div class="arrow-h">→</div></div>
+    <div class="node end"><div class="n">STEP 6</div><div class="t">听懂说明书</div><div class="d">可以反复听<br>可以随时追问</div></div>
+  </div>
+
+  <div class="flow row2">
+    <div class="node"><div class="n">Q1</div><div class="t">老人追问</div><div class="d">「饭前还是饭后？」<br>「能和降压药一起吃吗？」</div><div class="arrow-h">→</div></div>
+    <div class="node ai"><div class="n">Q2 · Agent</div><div class="t">决定调哪个工具</div><div class="d">Function Calling<br>检索 / 相互作用 / 常识</div><div class="arrow-h">→</div></div>
+    <div class="node ai"><div class="n">Q3 · RAG</div><div class="t">召回证据</div><div class="d">BM25 + 章节先验<br>每条证据带编号</div><div class="arrow-h">→</div></div>
+    <div class="node ai"><div class="n">Q4 · LLM</div><div class="t">有据生成</div><div class="d">只用证据回答<br>必须标注 [编号]</div><div class="arrow-h">→</div></div>
+    <div class="node risk"><div class="n">Q5 · 护栏</div><div class="t">四道闸门</div><div class="d">数字接地/引用/危险建议<br>+ 独立 Verifier 复核</div><div class="arrow-h">→</div></div>
+    <div class="node end"><div class="n">Q6</div><div class="t">可信回答</div><div class="d">不确定就说不确定<br>危险问题转医生</div></div>
+  </div>
+
+  <div class="gate">
+    <div class="g"><h4>闸门 ①：数字接地</h4><p>答案里的每个「数字+单位」必须能在证据原文中找到，否则整段降级</p></div>
+    <div class="g warn"><h4>闸门 ②：引用校验</h4><p>[n] 必须落在召回编号范围内，杜绝「编一条参考文献」</p></div>
+    <div class="g risk"><h4>闸门 ③：危险建议拦截</h4><p>停药/换药/加量/诊断 → 强制改写为「请医生判断」</p></div>
+    <div class="g"><h4>闸门 ④：独立复核</h4><p>另起一次模型调用逐句核对，不通过则回退保守答案</p></div>
+  </div>
+
+  <div class="loop">
+    <div class="lbl">闭环升级</div>
+    <div class="steps">
+      <span class="pill">加入用药清单</span> →
+      <span class="pill">多药冲突分级（禁忌/严重/注意）</span> →
+      <span class="pill w">相互作用知识库命中</span> →
+      <span class="pill">生成家属交接单</span> →
+      <span class="pill w">药师人工复核（高风险）</span>
+    </div>
+  </div>
+
+  <div class="foot">安心药声 · 参赛版 v1.0 ｜ 所有 AI 环节均可在本地 Ollama 上离线复现</div>
+</body>
+</html>

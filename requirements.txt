@@ -1,0 +1,15 @@
+# 安心药声 · 运行依赖（Python 3.10+）
+fastapi>=0.110
+uvicorn>=0.27
+requests>=2.31
+python-dotenv>=1.0
+python-multipart>=0.0.9
+edge-tts>=6.1
+jieba>=0.42
+imageio-ffmpeg>=0.4.9
+Pillow>=10.0
+
+# 以下仅构建文档/截图/视频时需要
+# python-pptx>=1.0
+# python-docx>=1.1
+# playwright>=1.40

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1600px; height: 900px; font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f6faf8; color: #10241f; padding: 48px 56px; position: relative; overflow: hidden;
+  }
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(900px 500px at 90% -10%, rgba(20,160,133,.12), transparent 60%);
+  }
+  h1 { font-size: 42px; letter-spacing: 1px; }
+  .sub { color: #6b8079; font-size: 19px; margin-top: 10px; }
+  .tag { display: inline-block; background: #0f7a68; color: #fff; font-size: 15px; padding: 7px 16px; border-radius: 999px; margin-bottom: 18px; letter-spacing: 1px; }
+  .canvas { position: relative; margin-top: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .lane { position: relative; }
+  .lane-title { font-size: 16px; color: #0f7a68; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+  .box {
+    background: #fff; border: 1.5px solid #dbe9e4; border-radius: 16px; padding: 14px 16px;
+    box-shadow: 0 10px 24px rgba(16,36,31,.06); margin-bottom: 12px; position: relative;
+  }
+  .box .t { font-weight: 700; font-size: 17px; }
+  .box .d { font-size: 13.5px; color: #5b716b; margin-top: 5px; line-height: 1.5; }
+  .box.hl { border-color: #0f7a68; background: #f2fbf8; }
+  .box.amber { border-color: #e7b06a; background: #fffaf2; }
+  .arrow { position: absolute; color: #9db5ae; font-size: 22px; }
+  .badge { position: absolute; top: -10px; right: 14px; background: #e6f6f1; color: #0f7a68; font-size: 12px; padding: 3px 10px; border-radius: 999px; font-weight: 700; }
+  .badge.a { background: #fdf1e2; color: #b26a12; }
+  .foot { position: absolute; bottom: 26px; left: 56px; right: 56px; display: flex; justify-content: space-between; color: #8fa39d; font-size: 13px; }
+  .perf { margin-top: 46px; background: #fff; border: 1.5px solid #dbe9e4; border-radius: 18px; padding: 22px 26px; box-shadow: 0 10px 24px rgba(16,36,31,.05); }
+  .perf-title { font-size: 15px; font-weight: 700; color: #0f7a68; margin-bottom: 16px; letter-spacing: .5px; }
+  .perf-row { display: flex; align-items: center; }
+  .perf-item { text-align: center; min-width: 128px; }
+  .perf-item b { display: block; font-size: 22px; color: #10241f; }
+  .perf-item span { font-size: 12.5px; color: #6b8079; }
+  .perf-item.total b { color: #0f7a68; }
+  .perf-line { flex: 1; height: 2px; background: linear-gradient(90deg, #cfe6dd, #e8f2ee); margin: 0 8px; position: relative; top: -8px; }
+</style>
+</head>
+<body>
+  <span class="tag">系统架构</span>
+  <h1>安心药声 · 端到端技术架构</h1>
+  <p class="sub">从一张说明书照片，到一段能听懂的语音 —— 四层解耦，任何一层都可替换</p>
+
+  <div class="canvas">
+    <!-- 采集层 -->
+    <div class="lane">
+      <div class="lane-title">① 输入层</div>
+      <div class="box"><span class="badge">多模态</span><div class="t">拍照 / 相册</div><div class="d">说明书、药盒、处方单<br>支持倾斜、反光、低照度</div></div>
+      <div class="box"><div class="t">文字粘贴</div><div class="d">子女代录入<br>OCR 失败时的兜底通道</div></div>
+      <div class="box"><div class="t">用药清单</div><div class="d">多药同服场景<br>最多支持 8 种药联合分析</div></div>
+    </div>
+
+    <!-- 理解层 -->
+    <div class="lane">
+      <div class="lane-title">② 理解层（视觉大模型）</div>
+      <div class="box hl"><span class="badge">VLM</span><div class="t">说明书结构化</div><div class="d">11 个字段 + evidence 原文锚点<br>禁止知识补全，缺字段返回 null</div></div>
+      <div class="box"><div class="t">可信度打分</div><div class="d">模糊/遮挡/缺页 → 置信度下降<br>低于阈值转人工核对</div></div>
+      <div class="box"><div class="t">章节切块</div><div class="d">按【】章节拆成最小证据单元<br>一句一条，可精确引用</div></div>
+    </div>
+
+    <!-- 推理层 -->
+    <div class="lane">
+      <div class="lane-title">③ 推理层（RAG + Agent）</div>
+      <div class="box hl"><span class="badge">核心</span><div class="t">混合检索</div><div class="d">BM25 + 章节意图先验 + 老年常识库<br>召回即带编号，答案必须带引用</div></div>
+      <div class="box amber"><span class="badge a">Function Calling</span><div class="t">Agent 工具编排</div><div class="d">search_label / check_interaction<br>get_elderly_tip / set_med_reminder<br>escalate_to_human（最多 5 轮）</div></div>
+      <div class="box"><div class="t">生成</div><div class="d">四段式播报稿 · 口语化问答<br>家属交接单 · 多药冲突分级</div></div>
+    </div>
+
+    <!-- 安全层 -->
+    <div class="lane">
+      <div class="lane-title">④ 安全与输出层</div>
+      <div class="box amber"><span class="badge a">护栏</span><div class="t">四道闸门</div><div class="d">数字接地 · 引用校验<br>危险建议拦截 · 独立 Verifier 复核</div></div>
+      <div class="box"><div class="t">语音合成</div><div class="d">数字转中文读法 · 语速 -12%<br>分段合成 + 拼接缓存</div></div>
+      <div class="box"><div class="t">多端输出</div><div class="d">大字 Web / 语音播报<br>家属交接单 / 可复制文本</div></div>
+    </div>
+  </div>
+
+  <div class="perf">
+    <div class="perf-title">一次真实请求的链路耗时（单机实测）</div>
+    <div class="perf-row">
+      <div class="perf-item"><b>0.0s</b><span>拍照上传</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item"><b>≈4s</b><span>VLM 结构化解析</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item"><b>≈10ms</b><span>章节切块</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item"><b>≈15ms</b><span>BM25 检索</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item"><b>≈2s</b><span>有据生成</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item"><b>≈2s</b><span>TTS 合成（缓存后 0s）</span></div>
+      <div class="perf-line"></div>
+      <div class="perf-item total"><b>≈8s</b><span>首屏可用</span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>大模型无关：火山方舟 · DeepSeek · 智谱 · 千帆 · Ollama 均可一键切换</span>
+    <span>开源实现 · Python + FastAPI + 原生前端 · 单机可跑</span>
+  </div>
+</body>
+</html>
+
