@@ -16,7 +16,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 BASE = "http://127.0.0.1:7860"
 
 
-def shot(page, name: str, wait: float = 0.6) -> None:
+def shot(page, name: str, wait: float = 2.6) -> None:
     time.sleep(wait)
     page.screenshot(path=str(OUT / f"{name}.png"), full_page=False)
     print("saved", name)
