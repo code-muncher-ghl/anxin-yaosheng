@@ -1,4 +1,4 @@
-﻿"""生成《安心药声 · 商业计划书》PPTX（16:9，20 页）
+"""生成《安心药声 · 商业计划书》PPTX（16:9，20 页）
 
 用法：python docs/build_bp.py
 输出：docs/out/安心药声-商业计划书.pptx
@@ -154,8 +154,9 @@ def s01_cover(prs):
         text(s, x, Inches(5.21), w, Inches(0.26), t, 9, RGBColor(0xB8, 0xDE, 0xD3), align=PP_ALIGN.CENTER)
         x += w + Inches(0.1)
 
-    text(s, Inches(0.92), Inches(6.36), Inches(6), Inches(0.26), "参赛团队：郭翰林（2025413087）· 计算机科学与技术", 9.5, RGBColor(0x8F, 0xA9, 0xA1))
-    text(s, Inches(0.92), Inches(6.66), Inches(6), Inches(0.26), "2026 年 11 月", 9.5, RGBColor(0x6F, 0x8B, 0x83))
+    text(s, Inches(0.92), Inches(6.18), Inches(6.8), Inches(0.26), "参赛团队：郭翰林（2025413087）", 9.5, RGBColor(0x8F, 0xA9, 0xA1))
+    text(s, Inches(0.92), Inches(6.46), Inches(6.8), Inches(0.26), "重庆工商大学 · 计算机科学与技术学院", 9.5, RGBColor(0x8F, 0xA9, 0xA1))
+    text(s, Inches(0.92), Inches(6.74), Inches(6), Inches(0.26), "2026 年 11 月", 9.5, RGBColor(0x6F, 0x8B, 0x83))
     return s
 
 

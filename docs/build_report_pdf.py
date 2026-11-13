@@ -152,6 +152,7 @@ def render() -> Path:
       <div class="s">AI 技术实现报告</div>
       <div class="d">药品说明书多模态解析 · 可溯源用药问答 · 多药冲突 Agent</div>
       <div class="m">
+        重庆工商大学　·　计算机科学与技术学院<br>
         郭翰林　·　学号 2025413087<br>
         文档版本：v1.0<br>
         技术栈：Python 3.13 / FastAPI / 原生前端 / OpenAI-Compatible 大模型<br>
