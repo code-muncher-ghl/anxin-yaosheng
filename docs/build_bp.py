@@ -154,7 +154,7 @@ def s01_cover(prs):
         text(s, x, Inches(5.21), w, Inches(0.26), t, 9, RGBColor(0xB8, 0xDE, 0xD3), align=PP_ALIGN.CENTER)
         x += w + Inches(0.1)
 
-    text(s, Inches(0.92), Inches(6.36), Inches(6), Inches(0.26), "参赛团队：XX 大学 · 计算机科学与技术学院", 9.5, RGBColor(0x8F, 0xA9, 0xA1))
+    text(s, Inches(0.92), Inches(6.36), Inches(6), Inches(0.26), "参赛团队：郭翰林 · 计算机科学与技术", 9.5, RGBColor(0x8F, 0xA9, 0xA1))
     text(s, Inches(0.92), Inches(6.66), Inches(6), Inches(0.26), "2026 年 11 月", 9.5, RGBColor(0x6F, 0x8B, 0x83))
     return s
 
@@ -617,10 +617,10 @@ def s20_team(prs, n):
     bg(s)
     page_title(s, "团队与路线图", "会写代码，也进过社区")
     members = [
-        ("郭同学", "项目负责人 / 全栈", "架构、模型接入、前端"),
-        ("待补充", "算法", "Prompt 工程与评测体系"),
-        ("待补充", "药学顾问", "执业药师，知识库校核"),
-        ("待补充", "产品运营", "社区地推与用户访谈"),
+        ("郭翰林", "项目负责人 / 全栈", "架构、模型接入、前端"),
+        ("郭翰林", "算法", "Prompt 工程与评测体系"),
+        ("待定", "药学顾问", "执业药师，知识库校核"),
+        ("郭翰林", "产品运营", "社区地推与用户访谈"),
     ]
     for i, (name, role, desc) in enumerate(members):
         x = Inches(0.72) + Inches(2.98) * i
