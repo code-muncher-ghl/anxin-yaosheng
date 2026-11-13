@@ -36,7 +36,7 @@
 ## 快速开始
 
 ```bash
-git clone <your-repo-url> anxin-yaosheng
+git clone https://github.com/code-muncher-ghl/anxin-yaosheng.git
 cd anxin-yaosheng
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
@@ -171,10 +171,7 @@ python -m tests.test_smoke       # 10 项冒烟测试，不联网
 
 ---
 
-## 免责声明
+## 免责声明与 License
 
-本项目为参赛原型，所有输出仅用于帮助理解说明书原文，**不构成医疗建议**，不能替代医生或药师的诊断与用药指导。示例说明书文本仅用于演示，请以实际药品说明书为准。
-
-## License
-
-MIT
+- **医疗免责声明**：见 [DISCLAIMER.md](DISCLAIMER.md)。本项目为参赛原型，输出不构成医疗建议。
+- **开源协议**：[MIT](LICENSE)。
