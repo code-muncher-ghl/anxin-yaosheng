@@ -1,4 +1,4 @@
-"""生成《安心药声 · AI 技术实现报告》DOCX
+﻿"""生成《安心药声 · AI 技术实现报告》DOCX
 
 用法：python docs/build_report.py
 输出：docs/out/安心药声-AI技术实现报告.docx
@@ -249,7 +249,7 @@ def build() -> Document:
         ("文档版本", "v1.0"),
         ("技术栈", "Python 3.13 / FastAPI / 原生前端 / OpenAI-Compatible 大模型"),
         ("代码规模", "约 2000 行 Python + 900 行前端"),
-        ("开源仓库", "github.com/xxx/anxin-yaosheng"),
+        ("开源仓库", "github.com/code-muncher-ghl/anxin-yaosheng"),
         ("编制日期", "2026 年 11 月"),
     ]
     t = doc.add_table(rows=0, cols=2)
@@ -632,3 +632,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
