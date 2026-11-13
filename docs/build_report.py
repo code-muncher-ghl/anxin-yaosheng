@@ -1,4 +1,4 @@
-﻿"""生成《安心药声 · AI 技术实现报告》DOCX
+"""生成《安心药声 · AI 技术实现报告》DOCX
 
 用法：python docs/build_report.py
 输出：docs/out/安心药声-AI技术实现报告.docx
@@ -246,6 +246,9 @@ def build() -> Document:
     for _ in range(5):
         doc.add_paragraph()
     meta = [
+        ("项目名称", "安心药声 · 药品说明书 AI 语音解读与多药冲突预警"),
+        ("姓　　名", "郭翰林"),
+        ("学　　号", "2025413087"),
         ("文档版本", "v1.0"),
         ("技术栈", "Python 3.13 / FastAPI / 原生前端 / OpenAI-Compatible 大模型"),
         ("代码规模", "约 2000 行 Python + 900 行前端"),

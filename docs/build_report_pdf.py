@@ -1,4 +1,4 @@
-﻿"""由 build_report.py 的内容块生成 HTML，再交给 Edge 无头打印成 PDF。
+"""由 build_report.py 的内容块生成 HTML，再交给 Edge 无头打印成 PDF。
 
 之所以不直接用 Word 转 PDF：本机 Word COM 在长文档 + 高清图的情况下会挂起，
 而 Edge 的 print-to-pdf 稳定、可重复，且排版完全由 CSS 控制。
@@ -152,6 +152,7 @@ def render() -> Path:
       <div class="s">AI 技术实现报告</div>
       <div class="d">药品说明书多模态解析 · 可溯源用药问答 · 多药冲突 Agent</div>
       <div class="m">
+        郭翰林　·　学号 2025413087<br>
         文档版本：v1.0<br>
         技术栈：Python 3.13 / FastAPI / 原生前端 / OpenAI-Compatible 大模型<br>
         开源仓库：github.com/code-muncher-ghl/anxin-yaosheng<br>
